@@ -1,0 +1,29 @@
+## Android Accelerometeter Streamer
+
+main.py Records and send android device accelerometer data via UDP on port 5005 in the following format. 
+
+struct {
+    float x, y, z; // 12 bytes
+    char time[26]; // 26 bytes
+}
+
+recv.cpp receives this data and records it to a text tile 'accel_data.txt' in the project's root directory in the following format:
+<x value>, <y value>, <z value>, <Time>
+
+send.sh is a little script to copy over the python files to the android device. Default password for the device is 'admin'. This is to avoid typing the scp command over and over
+
+connect.sh is an ssh wrapper to avoid typing: ssh -p 5005 [ip.addr]
+
+
+## Usage
+1. Ensure all ip addresses and ports are correct in send.sh and main.py
+2. Run ./send.sh to send python files to the android device 
+    * (chmod +x send.sh to make sure it's executable)
+3. Compile the C++ receiving program
+    * g++ recv.cpp (on linux). Run with ./a.out
+    * Build and run on visual studio
+5. Run the python script on the android device to start collecting and streaming
+
+### Notes
+Not sure if shell scripts work on linux
+
